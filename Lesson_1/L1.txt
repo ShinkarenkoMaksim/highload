@@ -1,0 +1,582 @@
+Использую Ubuntu 20.04.1 LTS
+Развернул виртуалку, накатил убунту, проблем 0
+
+
+
+Установил SSH на ubuntu через терминал, подключился к ней через Putty (да да, я виндоюзер):
+sudo apt update
+sudo apt-get ssh
+
+
+
+
+Устанавливаем nginx:
+
+makc@makc-VirtualBox:~/.ssh$ sudo apt install nginx
+[sudo] password for makc:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfprint-2-tod1
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  libnginx-mod-http-image-filter libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream
+  nginx-common nginx-core
+Suggested packages:
+  fcgiwrap nginx-doc
+The following NEW packages will be installed:
+  libnginx-mod-http-image-filter libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream
+  nginx nginx-common nginx-core
+0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
+Need to get 602 kB of archives.
+After this operation, 2 134 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 nginx-common all 1.18.0-0ubuntu1 [37,3 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 libnginx-mod-http-image-filter amd64 1.18.0-0ubuntu1 [14,3 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 libnginx-mod-http-xslt-filter amd64 1.18.0-0ubuntu1 [12,6 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 libnginx-mod-mail amd64 1.18.0-0ubuntu1 [42,3 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 libnginx-mod-stream amd64 1.18.0-0ubuntu1 [66,9 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 nginx-core amd64 1.18.0-0ubuntu1 [425 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 nginx all 1.18.0-0ubuntu1 [3 624 B]
+Fetched 602 kB in 0s (1 883 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package nginx-common.
+(Reading database ... 146817 files and directories currently installed.)
+Preparing to unpack .../0-nginx-common_1.18.0-0ubuntu1_all.deb ...
+Unpacking nginx-common (1.18.0-0ubuntu1) ...
+Selecting previously unselected package libnginx-mod-http-image-filter.
+Preparing to unpack .../1-libnginx-mod-http-image-filter_1.18.0-0ubuntu1_amd64.deb ...
+Unpacking libnginx-mod-http-image-filter (1.18.0-0ubuntu1) ...
+Selecting previously unselected package libnginx-mod-http-xslt-filter.
+Preparing to unpack .../2-libnginx-mod-http-xslt-filter_1.18.0-0ubuntu1_amd64.deb ...
+Unpacking libnginx-mod-http-xslt-filter (1.18.0-0ubuntu1) ...
+Selecting previously unselected package libnginx-mod-mail.
+Preparing to unpack .../3-libnginx-mod-mail_1.18.0-0ubuntu1_amd64.deb ...
+Unpacking libnginx-mod-mail (1.18.0-0ubuntu1) ...
+Selecting previously unselected package libnginx-mod-stream.
+Preparing to unpack .../4-libnginx-mod-stream_1.18.0-0ubuntu1_amd64.deb ...
+Unpacking libnginx-mod-stream (1.18.0-0ubuntu1) ...
+Selecting previously unselected package nginx-core.
+Preparing to unpack .../5-nginx-core_1.18.0-0ubuntu1_amd64.deb ...
+Unpacking nginx-core (1.18.0-0ubuntu1) ...
+Selecting previously unselected package nginx.
+Preparing to unpack .../6-nginx_1.18.0-0ubuntu1_all.deb ...
+Unpacking nginx (1.18.0-0ubuntu1) ...
+Setting up nginx-common (1.18.0-0ubuntu1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.
+Setting up libnginx-mod-http-xslt-filter (1.18.0-0ubuntu1) ...
+Setting up libnginx-mod-mail (1.18.0-0ubuntu1) ...
+Setting up libnginx-mod-http-image-filter (1.18.0-0ubuntu1) ...
+Setting up libnginx-mod-stream (1.18.0-0ubuntu1) ...
+Setting up nginx-core (1.18.0-0ubuntu1) ...
+Setting up nginx (1.18.0-0ubuntu1) ...
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for ufw (0.36-6) ...
+
+
+
+
+
+Отключаем файервол
+makc@makc-VirtualBox:~/.ssh$ sudo ufw disable
+Firewall stopped and disabled on system startup
+
+
+
+
+
+Устанавливаем mysql (куда же без нее)
+
+makc@makc-VirtualBox:~/.ssh$ sudo apt install mysql-server
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfprint-2-tod1
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  libaio1 libcgi-fast-perl libcgi-pm-perl libevent-core-2.1-7 libfcgi-perl libhtml-template-perl
+  libmecab2 mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
+  mysql-server-8.0 mysql-server-core-8.0
+Suggested packages:
+  libipc-sharedcache-perl mailx tinyca
+The following NEW packages will be installed:
+  libaio1 libcgi-fast-perl libcgi-pm-perl libevent-core-2.1-7 libfcgi-perl libhtml-template-perl
+  libmecab2 mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0 mysql-client-core-8.0
+  mysql-server mysql-server-8.0 mysql-server-core-8.0
+0 upgraded, 15 newly installed, 0 to remove and 0 not upgraded.
+Need to get 30,2 MB of archives.
+After this operation, 247 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 mysql-client-core-8.0 amd64 8.0.21-0ubuntu0.20.04.4 [4 207 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 mysql-client-8.0 amd64 8.0.21-0ubuntu0.20.04.4 [22,0 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libaio1 amd64 0.3.112-5 [7 184 B]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libevent-core-2.1-7 amd64 2.1.11-stable-1 [89,1 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libmecab2 amd64 0.996-10build1 [233 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 mysql-server-core-8.0 amd64 8.0.21-0ubuntu0.20.04.4 [17,4 MB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 mysql-server-8.0 amd64 8.0.21-0ubuntu0.20.04.4 [1 249 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libcgi-pm-perl all 4.46-1 [186 kB]
+Get:9 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libfcgi-perl amd64 0.79-1 [33,1 kB]
+Get:10 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libcgi-fast-perl all 1:2.15-1 [10,5 kB]
+Get:11 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libhtml-template-perl all 2.97-1 [59,0 kB]
+Get:12 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 mecab-utils amd64 0.996-10build1 [4 912 B]
+Get:13 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 mecab-ipadic all 2.7.0-20070801+main-2.1 [6 714 kB]
+Get:14 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 mecab-ipadic-utf8 all 2.7.0-20070801+main-2.1 [4 380 B]
+Get:15 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 mysql-server all 8.0.21-0ubuntu0.20.04.4 [9 552 B]
+Fetched 30,2 MB in 5s (6 505 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package mysql-client-core-8.0.
+(Reading database ... 146895 files and directories currently installed.)
+Preparing to unpack .../00-mysql-client-core-8.0_8.0.21-0ubuntu0.20.04.4_amd64.deb ...
+Unpacking mysql-client-core-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Selecting previously unselected package mysql-client-8.0.
+Preparing to unpack .../01-mysql-client-8.0_8.0.21-0ubuntu0.20.04.4_amd64.deb ...
+Unpacking mysql-client-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Selecting previously unselected package libaio1:amd64.
+Preparing to unpack .../02-libaio1_0.3.112-5_amd64.deb ...
+Unpacking libaio1:amd64 (0.3.112-5) ...
+Selecting previously unselected package libevent-core-2.1-7:amd64.
+Preparing to unpack .../03-libevent-core-2.1-7_2.1.11-stable-1_amd64.deb ...
+Unpacking libevent-core-2.1-7:amd64 (2.1.11-stable-1) ...
+Selecting previously unselected package libmecab2:amd64.
+Preparing to unpack .../04-libmecab2_0.996-10build1_amd64.deb ...
+Unpacking libmecab2:amd64 (0.996-10build1) ...
+Selecting previously unselected package mysql-server-core-8.0.
+Preparing to unpack .../05-mysql-server-core-8.0_8.0.21-0ubuntu0.20.04.4_amd64.deb ...
+Unpacking mysql-server-core-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Selecting previously unselected package mysql-server-8.0.
+Preparing to unpack .../06-mysql-server-8.0_8.0.21-0ubuntu0.20.04.4_amd64.deb ...
+Unpacking mysql-server-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Selecting previously unselected package libcgi-pm-perl.
+Preparing to unpack .../07-libcgi-pm-perl_4.46-1_all.deb ...
+Unpacking libcgi-pm-perl (4.46-1) ...
+Selecting previously unselected package libfcgi-perl.
+Preparing to unpack .../08-libfcgi-perl_0.79-1_amd64.deb ...
+Unpacking libfcgi-perl (0.79-1) ...
+Selecting previously unselected package libcgi-fast-perl.
+Preparing to unpack .../09-libcgi-fast-perl_1%3a2.15-1_all.deb ...
+Unpacking libcgi-fast-perl (1:2.15-1) ...
+Selecting previously unselected package libhtml-template-perl.
+Preparing to unpack .../10-libhtml-template-perl_2.97-1_all.deb ...
+Unpacking libhtml-template-perl (2.97-1) ...
+Selecting previously unselected package mecab-utils.
+Preparing to unpack .../11-mecab-utils_0.996-10build1_amd64.deb ...
+Unpacking mecab-utils (0.996-10build1) ...
+Selecting previously unselected package mecab-ipadic.
+Preparing to unpack .../12-mecab-ipadic_2.7.0-20070801+main-2.1_all.deb ...
+Unpacking mecab-ipadic (2.7.0-20070801+main-2.1) ...
+Selecting previously unselected package mecab-ipadic-utf8.
+Preparing to unpack .../13-mecab-ipadic-utf8_2.7.0-20070801+main-2.1_all.deb ...
+Unpacking mecab-ipadic-utf8 (2.7.0-20070801+main-2.1) ...
+Selecting previously unselected package mysql-server.
+Preparing to unpack .../14-mysql-server_8.0.21-0ubuntu0.20.04.4_all.deb ...
+Unpacking mysql-server (8.0.21-0ubuntu0.20.04.4) ...
+Setting up libmecab2:amd64 (0.996-10build1) ...
+Setting up mysql-client-core-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Setting up libcgi-pm-perl (4.46-1) ...
+Setting up libhtml-template-perl (2.97-1) ...
+Setting up mecab-utils (0.996-10build1) ...
+Setting up libevent-core-2.1-7:amd64 (2.1.11-stable-1) ...
+Setting up mysql-client-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Setting up libfcgi-perl (0.79-1) ...
+Setting up libaio1:amd64 (0.3.112-5) ...
+Setting up mecab-ipadic (2.7.0-20070801+main-2.1) ...
+Compiling IPA dictionary for Mecab.  This takes long time...
+reading /usr/share/mecab/dic/ipadic/unk.def ... 40
+emitting double-array: 100% |###########################################|
+/usr/share/mecab/dic/ipadic/model.def is not found. skipped.
+reading /usr/share/mecab/dic/ipadic/Noun.verbal.csv ... 12146
+reading /usr/share/mecab/dic/ipadic/Noun.csv ... 60477
+reading /usr/share/mecab/dic/ipadic/Postp-col.csv ... 91
+reading /usr/share/mecab/dic/ipadic/Noun.others.csv ... 151
+reading /usr/share/mecab/dic/ipadic/Prefix.csv ... 221
+reading /usr/share/mecab/dic/ipadic/Conjunction.csv ... 171
+reading /usr/share/mecab/dic/ipadic/Noun.adjv.csv ... 3328
+reading /usr/share/mecab/dic/ipadic/Postp.csv ... 146
+reading /usr/share/mecab/dic/ipadic/Symbol.csv ... 208
+reading /usr/share/mecab/dic/ipadic/Noun.place.csv ... 72999
+reading /usr/share/mecab/dic/ipadic/Noun.org.csv ... 16668
+reading /usr/share/mecab/dic/ipadic/Noun.number.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Interjection.csv ... 252
+reading /usr/share/mecab/dic/ipadic/Others.csv ... 2
+reading /usr/share/mecab/dic/ipadic/Auxil.csv ... 199
+reading /usr/share/mecab/dic/ipadic/Verb.csv ... 130750
+reading /usr/share/mecab/dic/ipadic/Filler.csv ... 19
+reading /usr/share/mecab/dic/ipadic/Noun.nai.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Adverb.csv ... 3032
+reading /usr/share/mecab/dic/ipadic/Noun.demonst.csv ... 120
+reading /usr/share/mecab/dic/ipadic/Suffix.csv ... 1393
+reading /usr/share/mecab/dic/ipadic/Noun.name.csv ... 34202
+reading /usr/share/mecab/dic/ipadic/Noun.adverbal.csv ... 795
+reading /usr/share/mecab/dic/ipadic/Adnominal.csv ... 135
+reading /usr/share/mecab/dic/ipadic/Adj.csv ... 27210
+reading /usr/share/mecab/dic/ipadic/Noun.proper.csv ... 27328
+emitting double-array: 100% |###########################################|
+reading /usr/share/mecab/dic/ipadic/matrix.def ... 1316x1316
+emitting matrix      : 100% |###########################################|
+
+done!
+update-alternatives: using /var/lib/mecab/dic/ipadic to provide /var/lib/mecab/dic/debian (mecab-dictionary) in auto mode
+Setting up libcgi-fast-perl (1:2.15-1) ...
+Setting up mysql-server-core-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+Setting up mecab-ipadic-utf8 (2.7.0-20070801+main-2.1) ...
+Compiling IPA dictionary for Mecab.  This takes long time...
+reading /usr/share/mecab/dic/ipadic/unk.def ... 40
+emitting double-array: 100% |###########################################|
+/usr/share/mecab/dic/ipadic/model.def is not found. skipped.
+reading /usr/share/mecab/dic/ipadic/Noun.verbal.csv ... 12146
+reading /usr/share/mecab/dic/ipadic/Noun.csv ... 60477
+reading /usr/share/mecab/dic/ipadic/Postp-col.csv ... 91
+reading /usr/share/mecab/dic/ipadic/Noun.others.csv ... 151
+reading /usr/share/mecab/dic/ipadic/Prefix.csv ... 221
+reading /usr/share/mecab/dic/ipadic/Conjunction.csv ... 171
+reading /usr/share/mecab/dic/ipadic/Noun.adjv.csv ... 3328
+reading /usr/share/mecab/dic/ipadic/Postp.csv ... 146
+reading /usr/share/mecab/dic/ipadic/Symbol.csv ... 208
+reading /usr/share/mecab/dic/ipadic/Noun.place.csv ... 72999
+reading /usr/share/mecab/dic/ipadic/Noun.org.csv ... 16668
+reading /usr/share/mecab/dic/ipadic/Noun.number.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Interjection.csv ... 252
+reading /usr/share/mecab/dic/ipadic/Others.csv ... 2
+reading /usr/share/mecab/dic/ipadic/Auxil.csv ... 199
+reading /usr/share/mecab/dic/ipadic/Verb.csv ... 130750
+reading /usr/share/mecab/dic/ipadic/Filler.csv ... 19
+reading /usr/share/mecab/dic/ipadic/Noun.nai.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Adverb.csv ... 3032
+reading /usr/share/mecab/dic/ipadic/Noun.demonst.csv ... 120
+reading /usr/share/mecab/dic/ipadic/Suffix.csv ... 1393
+reading /usr/share/mecab/dic/ipadic/Noun.name.csv ... 34202
+reading /usr/share/mecab/dic/ipadic/Noun.adverbal.csv ... 795
+reading /usr/share/mecab/dic/ipadic/Adnominal.csv ... 135
+reading /usr/share/mecab/dic/ipadic/Adj.csv ... 27210
+reading /usr/share/mecab/dic/ipadic/Noun.proper.csv ... 27328
+emitting double-array: 100% |###########################################|
+reading /usr/share/mecab/dic/ipadic/matrix.def ... 1316x1316
+emitting matrix      : 100% |###########################################|
+
+done!
+update-alternatives: using /var/lib/mecab/dic/ipadic-utf8 to provide /var/lib/mecab/dic/debian (mecab-dictionary) in auto mode
+Setting up mysql-server-8.0 (8.0.21-0ubuntu0.20.04.4) ...
+update-alternatives: using /etc/mysql/mysql.cnf to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+Renaming removed key_buffer and myisam-recover options (if present)
+mysqld will log errors to /var/log/mysql/error.log
+mysqld is running as pid 6388
+Created symlink /etc/systemd/system/multi-user.target.wants/mysql.service → /lib/systemd/system/mysql.service.
+Setting up mysql-server (8.0.21-0ubuntu0.20.04.4) ...
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9) ...
+
+Настраивать ее буду позже, когда она потребуется
+
+
+
+
+
+Устанавливаем php-fpm и php-mysql
+
+
+makc@makc-VirtualBox:~/.ssh$ sudo apt install php-fpm php-mysql
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfprint-2-tod1
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  php-common php7.4-cli php7.4-common php7.4-fpm php7.4-json php7.4-mysql php7.4-opcache
+  php7.4-readline
+Suggested packages:
+  php-pear
+The following NEW packages will be installed:
+  php-common php-fpm php-mysql php7.4-cli php7.4-common php7.4-fpm php7.4-json php7.4-mysql
+  php7.4-opcache php7.4-readline
+0 upgraded, 10 newly installed, 0 to remove and 0 not upgraded.
+Need to get 4 201 kB of archives.
+After this operation, 18,6 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 php-common all 2:75 [11,9 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-common amd64 7.4.3-4ubuntu2.2 [979 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-json amd64 7.4.3-4ubuntu2.2 [19,2 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-opcache amd64 7.4.3-4ubuntu2.2 [198 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-readline amd64 7.4.3-4ubuntu2.2 [12,6 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-cli amd64 7.4.3-4ubuntu2.2 [1 421 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe amd64 php7.4-fpm amd64 7.4.3-4ubuntu2.2 [1 434 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 php-fpm all 2:7.4+75 [2 792 B]
+Get:9 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-mysql amd64 7.4.3-4ubuntu2.2 [121 kB]
+Get:10 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 php-mysql all 2:7.4+75 [2 000 B]
+Fetched 4 201 kB in 1s (5 212 kB/s)
+Selecting previously unselected package php-common.
+(Reading database ... 147255 files and directories currently installed.)
+Preparing to unpack .../0-php-common_2%3a75_all.deb ...
+Unpacking php-common (2:75) ...
+Selecting previously unselected package php7.4-common.
+Preparing to unpack .../1-php7.4-common_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-common (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php7.4-json.
+Preparing to unpack .../2-php7.4-json_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-json (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php7.4-opcache.
+Preparing to unpack .../3-php7.4-opcache_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-opcache (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php7.4-readline.
+Preparing to unpack .../4-php7.4-readline_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-readline (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php7.4-cli.
+Preparing to unpack .../5-php7.4-cli_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-cli (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php7.4-fpm.
+Preparing to unpack .../6-php7.4-fpm_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-fpm (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php-fpm.
+Preparing to unpack .../7-php-fpm_2%3a7.4+75_all.deb ...
+Unpacking php-fpm (2:7.4+75) ...
+Selecting previously unselected package php7.4-mysql.
+Preparing to unpack .../8-php7.4-mysql_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-mysql (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php-mysql.
+Preparing to unpack .../9-php-mysql_2%3a7.4+75_all.deb ...
+Unpacking php-mysql (2:7.4+75) ...
+Setting up php-common (2:75) ...
+Created symlink /etc/systemd/system/timers.target.wants/phpsessionclean.timer → /lib/systemd/system/phpsessionclean.timer.
+Setting up php7.4-common (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/calendar.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/ctype.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/exif.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/fileinfo.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/ffi.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/ftp.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/gettext.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/iconv.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/pdo.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/phar.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/posix.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/shmop.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/sockets.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/sysvmsg.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/sysvsem.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/sysvshm.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/tokenizer.ini with new version
+Setting up php7.4-mysql (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/mysqlnd.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/mysqli.ini with new version
+
+Creating config file /etc/php/7.4/mods-available/pdo_mysql.ini with new version
+Setting up php7.4-readline (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/readline.ini with new version
+Setting up php7.4-opcache (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/opcache.ini with new version
+Setting up php7.4-json (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/json.ini with new version
+Setting up php-mysql (2:7.4+75) ...
+Setting up php7.4-cli (7.4.3-4ubuntu2.2) ...
+update-alternatives: using /usr/bin/php7.4 to provide /usr/bin/php (php) in auto mode
+update-alternatives: using /usr/bin/phar7.4 to provide /usr/bin/phar (phar) in auto mode
+update-alternatives: using /usr/bin/phar.phar7.4 to provide /usr/bin/phar.phar (phar.phar) in auto mode
+
+Creating config file /etc/php/7.4/cli/php.ini with new version
+Setting up php7.4-fpm (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/fpm/php.ini with new version
+Created symlink /etc/systemd/system/multi-user.target.wants/php7.4-fpm.service → /lib/systemd/system/php7.4-fpm.service.
+Setting up php-fpm (2:7.4+75) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+Processing triggers for php7.4-cli (7.4.3-4ubuntu2.2) ...
+Processing triggers for php7.4-fpm (7.4.3-4ubuntu2.2) ...
+
+
+
+Создаем файл конфигурации nginx путем копирования дефолтной конфы
+
+makc@makc-VirtualBox:~/.ssh$ cd /etc/nginx/sites-available/
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo cp default my_conf
+
+Настраиваем нашу конфигурацию
+
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo nano my_conf
+
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# https://www.nginx.com/resources/wiki/start/
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+# https://wiki.debian.org/Nginx/DirectoryStructure
+#
+# In most cases, administrators will remove this file from sites-enabled/ and
+# leave it as reference inside of sites-available where it will continue to be
+# updated by the nginx packaging team.
+#
+# This file will automatically load configuration files provided by other
+# applications, such as Drupal or Wordpress. These applications will be made
+# available underneath a path with that package name, such as /drupal8.
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default server configuration
+#
+server {
+        listen 80;
+
+        # SSL configuration
+        #
+        # listen 443 ssl default_server;
+        # listen [::]:443 ssl default_server;
+        #
+        # Note: You should disable gzip for SSL traffic.
+        # See: https://bugs.debian.org/773332
+        #
+        # Read up on ssl_ciphers to ensure a secure configuration.
+        # See: https://bugs.debian.org/765782
+        #
+        # Self signed certs generated by the ssl-cert package
+        # Don't use them in a production server!
+        #
+        # include snippets/snakeoil.conf;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name 192.168.88.219;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+
+        # pass PHP scripts to FastCGI server
+        #
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+        #
+        #       # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        #       # With php-cgi (or other tcp sockets):
+        #       fastcgi_pass 127.0.0.1:9000;
+        }
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+                deny all;
+        }
+}
+
+
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+#server {
+#       listen 80;
+#       listen [::]:80;
+#
+#       server_name example.com;
+#
+#       root /var/www/example.com;
+#       index index.html;
+#
+#       location / {
+#               try_files $uri $uri/ =404;
+#       }
+#}
+
+У меня получилось как-то так
+
+
+
+
+Создаём ссылку на новую конфу и удаляем ссылку на дефолтную
+
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo ln -s /etc/nginx/sites-available/my_conf /etc/nginx/sites-enabled/
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo unlink /etc/nginx/sites-enabled/default
+
+
+
+
+Релоадим nginx
+
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo systemctl reload nginx
+
+
+
+
+Создаём скрипты php
+
+Создаём файл info.php
+
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo nano /var/www/html/info.php
+
+Заполняем файл
+
+<?php
+phpinfo();
+
+
+Создаём файл index.php
+
+makc@makc-VirtualBox:/etc/nginx/sites-available$ sudo nano /var/www/html/index.php
+
+Заполняем файл
+
+<?php
+echo 'Привет, ' . htmlspecialchars($_GET["my_name"]) . ', рады видеть тебя на нашем сайте!';
+
+
+Проверяем:
+
+http://192.168.88.219/?my_name=Макс
+выводит 
+Привет, Макс, рады видеть тебя на нашем сайте!
+
+http://192.168.88.219/info.php
+выводит информацию о php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
