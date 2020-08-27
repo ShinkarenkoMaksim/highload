@@ -7,6 +7,7 @@ use app\engine\Render;
 use app\interfaces\IRenderer;
 use app\models\repositories\UserRepository;
 
+
 abstract class Controller
 {
     private $action;

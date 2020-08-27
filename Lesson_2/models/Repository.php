@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\models\entities\DataEntity;
-use phpDocumentor\Reflection\Types\This;
 
 /**
  * Class Model
