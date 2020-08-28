@@ -14,7 +14,7 @@ abstract class Repository extends Models
 
     public function __construct()
     {
-        $file = file("../data/bd.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $file = file(DB_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($file as $str) {
             array_push($this->bd, json_decode($str));
         }
@@ -32,7 +32,7 @@ abstract class Repository extends Models
     public function insert(DataEntity $entity)
     {
         $entity->id = count($this->bd);
-        $file = fopen("../data/bd.txt", "a+");
+        $file = fopen(DB_FILE, "a+");
         fwrite($file, json_encode($entity) . PHP_EOL);
         fclose($file);
     }
