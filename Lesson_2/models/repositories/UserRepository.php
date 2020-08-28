@@ -37,11 +37,6 @@ class UserRepository extends Repository
         return isset($_SESSION['login']) ? true : false;
     }
 
-    public static function isAuthStatic()
-    {
-        return isset($_SESSION['login']) ? true : false;
-    }
-
     public function getName()
     {
         return $this->isAuth() ? $_SESSION['login'] : "Guest";
