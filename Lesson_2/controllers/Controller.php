@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\engine\Render;
 use app\interfaces\IRenderer;
 use app\models\repositories\UserRepository;
+use app\models\entities\User;
 
 
 abstract class Controller
@@ -39,7 +40,7 @@ abstract class Controller
 
     public function render($template, $params = [])
     {
-        if ((new UserRepository())->isAuth()) {
+        if ((new User())->isAuth()) {
             $id = (new UserRepository())->getId();
             $field = 'user_id';
         } else {
@@ -48,7 +49,7 @@ abstract class Controller
         }
         return $this->renderTemplate("layouts/{$this->layout}", [
             'content' => $this->renderTemplate($template, $params),
-            'auth' => (new UserRepository())->isAuth(),
+            'auth' => (new User())->isAuth(),
             'username' => (new UserRepository())->getName(),
         ]);
     }

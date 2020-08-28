@@ -3,7 +3,7 @@ session_start();
 
 use app\engine\Render;
 use app\engine\Request;
-use app\models\repositories\UserRepository;
+use app\models\entities\User;
 
 include $_SERVER['DOCUMENT_ROOT'] . "/../config/config.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/../vendor/autoload.php";
@@ -32,7 +32,7 @@ if ($actionName || $controllerName === "index") {
     }
 } else {
     //Если аргумент один - рендерим вьюшку без выполнения действий контроллеров
-    echo Render::renderView($controllerName, ['isAuth' => (new UserRepository)->isAuth()]);
+    echo Render::renderView($controllerName, ['isAuth' => (new User)->isAuth()]);
 }
 
 

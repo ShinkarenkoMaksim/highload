@@ -22,4 +22,9 @@ class User extends DataEntity
         $this->pass = $pass;
 
     }
+
+    public function isAuth()
+    {
+        return isset($_SESSION['login']) ? true : false;
+    }
 }

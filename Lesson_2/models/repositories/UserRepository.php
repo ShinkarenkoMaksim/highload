@@ -32,14 +32,9 @@ class UserRepository extends Repository
         die("Такой пользователь уже существует");
     }
 
-    public function isAuth()
-    {
-        return isset($_SESSION['login']) ? true : false;
-    }
-
     public function getName()
     {
-        return $this->isAuth() ? $_SESSION['login'] : "Guest";
+        return (new User)->isAuth() ? $_SESSION['login'] : "Guest";
     }
 
     public function getId()
