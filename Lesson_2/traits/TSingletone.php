@@ -1,10 +1,10 @@
 <?php
 
 
-namespace app\engine;
+namespace app\traits;
 
 
-class Singletone
+trait TSingletone
 {
     private static $instances = [];
 
