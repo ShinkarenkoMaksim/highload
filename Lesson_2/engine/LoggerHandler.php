@@ -2,15 +2,15 @@
 
 
 namespace app\engine;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use app\engine\Singletone;
+use app\traits\TSingletone;
 
 
-class LoggerHandler extends Singletone
+class LoggerHandler
 {
     private $fileHandlerInfo;
     private $fileHandlerError;
+
+    use TSingletone;
 
     protected function __construct() {
         $this->fileHandlerInfo = fopen('../log/info.log', 'a');

@@ -8,11 +8,15 @@ use app\engine\LoggerHandler;
 
 class UserRepository extends Repository
 {
+    public function getTableName() {
+        return 'users';
+    }
+
     public function auth($login, $pass)
     {
         LoggerHandler::logInfo('Запуск функции auth()');
         $user = $this->getWhere('login', $login);
-        if ($user && $pass == $user->pass) {
+        if ($user && password_verify($pass, $user->passwordHash)) {
             $_SESSION['login'] = $login;
             $_SESSION['id'] = $user->id;
             return true;
@@ -25,7 +29,7 @@ class UserRepository extends Repository
     {
         LoggerHandler::logInfo('Запуск функции register()');
         if (!$this->getWhere('login', $login)) {
-            $this->insert(new User($login, $pass));
+            $this->insert(new User($login, password_hash($pass, PASSWORD_DEFAULT)));
             return true;
         }
         LoggerHandler::logInfo('Попытка создать существующего пользователя ' . $login);
@@ -40,6 +44,10 @@ class UserRepository extends Repository
     public function getId()
     {
         return $_SESSION['id'];
+    }
+
+    public function getEntityClass () {
+        return User::class;
     }
 
 }

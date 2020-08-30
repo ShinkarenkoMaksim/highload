@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\engine\Db;
 use app\models\entities\DataEntity;
 
 /**
@@ -10,36 +11,42 @@ use app\models\entities\DataEntity;
  */
 abstract class Repository extends Models
 {
-    protected $bd = [];
+    protected $db;
 
     public function __construct()
     {
-        $file = file(DB_FILE, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($file as $str) {
-            array_push($this->bd, json_decode($str));
-        }
+        $this->db = Db::getInstance();
     }
 
     public function getWhere($field, $value)
     {
-        foreach ($this->bd as $item) {
-            if ($item->$field === $value)
-                return $item;
-        }
-        return false;
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE `$field`=:$field";
+        return $this->db->queryObject($sql, ["$field"=>$value], $this->getEntityClass());
     }
 
     public function insert(DataEntity $entity)
     {
-        $entity->id = count($this->bd);
-        $file = fopen(DB_FILE, "a+");
-        fwrite($file, json_encode($entity) . PHP_EOL);
-        fclose($file);
+        $params = [];
+        $columns = [];
+        $tableName = $this->getTableName();
+        foreach ($entity->state as $key => $value) {
+            $params[":{$key}"] = $entity->$key;
+            $columns[] = "`$key`";
+        }
+        $columns = implode(", ", $columns);
+        $values = implode(", ", array_keys($params));
+
+        $sql = "INSERT INTO {$tableName} ({$columns}) VALUES ($values);";
+
+        $this->db->execute($sql, $params);
+        $entity->id = $this->db->lastInsertId();
     }
+
 
     public function getAll()
     {
-        return $this->bd;
+        return $this->db;
     }
 
 }

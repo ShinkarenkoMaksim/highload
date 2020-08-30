@@ -6,20 +6,24 @@ class User extends DataEntity
 {
     public $id;
     public $login;
-    public $pass;
+    public $passwordHash;
 
+    public $state = [
+        'login' => true,
+        'passwordHash' => true,
+    ];
 
     /**
      * User constructor.
      * @param $login
-     * @param $pass
+     * @param $passwordHash
      * @param $id
      */
-    public function __construct($login = null, $pass = null, $id = null)
+    public function __construct($login = null, $passwordHash = null, $id = null)
     {
         $this->id = $id;
         $this->login = $login;
-        $this->pass = $pass;
+        $this->passwordHash = $passwordHash;
 
     }
 
