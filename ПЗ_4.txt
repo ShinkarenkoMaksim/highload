@@ -1,0 +1,204 @@
+1. Собрать две виртуальные машины с установленным MySQL-сервером.
+
+Одна машина уже была собрана, собрал вторую. Не знаю, что описывать, всё просто
+
+2. Развернуть репликацию на этих двух серверах.
+
+В качестве мастера использовал первую машину.
+Изменил конфиг
+
+==============================================================================================
+
+#
+# The MySQL database server configuration file.
+#
+# One can use all long options that the program supports.
+# Run program with --help to get a list of available options and with
+# --print-defaults to see which it would actually understand and use.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+# Here is entries for some specific programs
+# The following values assume you have at least 32M ram
+
+[mysqld]
+#
+# * Basic Settings
+#
+user            = mysql
+# pid-file      = /var/run/mysqld/mysqld.pid
+# socket        = /var/run/mysqld/mysqld.sock
+# port          = 3306
+# datadir       = /var/lib/mysql
+
+
+# If MySQL is running as a replication slave, this should be
+# changed. Ref https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_tmpdir
+# tmpdir                = /tmp
+#
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address            = 0.0.0.0
+#
+# * Fine Tuning
+#
+key_buffer_size         = 16M
+# max_allowed_packet    = 64M
+# thread_stack          = 256K
+
+# thread_cache_size       = -1
+
+# This replaces the startup script and checks MyISAM tables if needed
+# the first time they are touched
+myisam-recover-options  = BACKUP
+
+# max_connections        = 151
+
+# table_open_cache       = 4000
+
+#
+# * Logging and Replication
+#
+# Both location gets rotated by the cronjob.
+#
+# Log all queries
+# Be aware that this log type is a performance killer.
+# general_log_file        = /var/log/mysql/query.log
+# general_log             = 1
+#
+# Error log - should be very few entries.
+#
+log_error = /var/log/mysql/error.log
+#
+# Here you can see queries with especially long duration
+# slow_query_log                = 1
+# slow_query_log_file   = /var/log/mysql/mysql-slow.log
+# long_query_time = 2
+# log-queries-not-using-indexes
+#
+# The following can be used as easy to replay backup logs or for replication.
+# note: if you are setting up a replication slave, see README.Debian about
+#       other settings you may need to change.
+server-id               = 1
+log_bin                 = /var/log/mysql/mysql-bin.log
+# binlog_expire_logs_seconds    = 2592000
+max_binlog_size   = 100M
+binlog_do_db            = highload
+# binlog_ignore_db      = include_database_name
+
+========================================================================================
+
+
+Были выполнены следующие команды (после изменения файла конфигурации и рестарта mysql)
+
+
+mysql> FLUSH TABLES WITH READ LOCK;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW MASTER STATUS
+    -> ;
++---------------+----------+--------------+------------------+-------------------+
+| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++---------------+----------+--------------+------------------+-------------------+
+| binlog.000002 |     2132 | highload     |                  |                   |
++---------------+----------+--------------+------------------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> UNLOCK TABLES;
+Query OK, 0 rows affecte
+
+mysql> CREATE USER 'replica'@'192.168.88.218' IDENTIFIED BY 'pass';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'replica'@'192.168.88.218';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ALTER USER 'replica'@'192.168.88.218' IDENTIFIED WITH mysql_native_password BY 'pass';
+Query OK, 0 rows affected (0.01 sec)
+
+
+Далее изменил конфиг сервера - он аналогичен конфигу мастера, только server_id = 2
+
+Выполнил на слэйве следующие команды
+
+mysql> STOP SLAVE;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CHANGE MASTER TO MASTER_HOST='192.168.88.219',MASTER_USER='replica',MASTER_PASSWORD='pass',MASTER_LOG_FILE='mysql-bin.000002',MASTER_LOG_POS=2132;
+Query OK, 0 rows affected, 2 warnings (0.37 sec)
+
+mysql> START SLAVE;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW SLAVE STATUS\G;
+*************************** 1. row ***************************
+               Slave_IO_State: Waiting for master to send event
+                  Master_Host: 192.168.88.219
+                  Master_User: replica
+                  Master_Port: 3306
+                Connect_Retry: 60
+              Master_Log_File: mysql-bin.000002
+          Read_Master_Log_Pos: 3020
+               Relay_Log_File: makc-VirtualBox-relay-bin.000002
+                Relay_Log_Pos: 553
+        Relay_Master_Log_File: mysql-bin.000002
+             Slave_IO_Running: Yes
+            Slave_SQL_Running: Yes
+              Replicate_Do_DB:
+          Replicate_Ignore_DB:
+           Replicate_Do_Table:
+       Replicate_Ignore_Table:
+      Replicate_Wild_Do_Table:
+  Replicate_Wild_Ignore_Table:
+                   Last_Errno: 0
+                   Last_Error:
+                 Skip_Counter: 0
+          Exec_Master_Log_Pos: 3020
+              Relay_Log_Space: 772
+              Until_Condition: None
+               Until_Log_File:
+                Until_Log_Pos: 0
+           Master_SSL_Allowed: No
+           Master_SSL_CA_File:
+           Master_SSL_CA_Path:
+              Master_SSL_Cert:
+            Master_SSL_Cipher:
+               Master_SSL_Key:
+        Seconds_Behind_Master: 0
+Master_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 0
+                Last_IO_Error:
+               Last_SQL_Errno: 0
+               Last_SQL_Error:
+  Replicate_Ignore_Server_Ids:
+             Master_Server_Id: 1
+                  Master_UUID: 223fe546-e25c-11ea-a958-080027901b53
+             Master_Info_File: mysql.slave_master_info
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+      Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates
+           Master_Retry_Count: 86400
+                  Master_Bind:
+      Last_IO_Error_Timestamp:
+     Last_SQL_Error_Timestamp:
+               Master_SSL_Crl:
+           Master_SSL_Crlpath:
+           Retrieved_Gtid_Set:
+            Executed_Gtid_Set:
+                Auto_Position: 0
+         Replicate_Rewrite_DB:
+                 Channel_Name:
+           Master_TLS_Version:
+       Master_public_key_path:
+        Get_master_public_key: 0
+            Network_Namespace:
+1 row in set (0.00 sec)
+
+
+=============================================================================================
+
+После выполнил на мастере несколько команд - создание таблицы, вставку строки, удаление таблицы
+Все операции повторились на слэйве.
+
+
