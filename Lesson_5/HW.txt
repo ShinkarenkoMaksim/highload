@@ -1,0 +1,156 @@
+1. Развернуть механизмы кеширования на виртуальной машине.
+
+
+
+Устанавливаем memcached:
+
+makc@makc-VirtualBox:~$ sudo apt install memcached
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfprint-2-tod1
+Use 'sudo apt autoremove' to remove it.
+Suggested packages:
+  libanyevent-perl libcache-memcached-perl libmemcached libterm-readkey-perl libyaml-perl
+The following NEW packages will be installed:
+  memcached
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 126 kB of archives.
+After this operation, 332 kB of additional disk space will be used.
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 memcached amd64 1.5.22-2ubuntu0.1 [126 kB]
+Fetched 126 kB in 0s (722 kB/s)
+Selecting previously unselected package memcached.
+(Reading database ... 198694 files and directories currently installed.)
+Preparing to unpack .../memcached_1.5.22-2ubuntu0.1_amd64.deb ...
+Unpacking memcached (1.5.22-2ubuntu0.1) ...
+Setting up memcached (1.5.22-2ubuntu0.1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/memcached.service → /lib/systemd/system/memcached.service.
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+
+Проверяем, что сервис работает: 
+
+makc@makc-VirtualBox:~$ sudo netstat -plunt | grep memcached
+tcp        0      0 127.0.0.1:11211         0.0.0.0:*               LISTEN      12853/memcached
+
+
+
+Устанавливаем Redis:
+
+makc@makc-VirtualBox:~$ sudo apt install redis-server
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfprint-2-tod1
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  libhiredis0.14 libjemalloc2 liblua5.1-0 lua-bitop lua-cjson redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  libhiredis0.14 libjemalloc2 liblua5.1-0 lua-bitop lua-cjson redis-server redis-tools
+0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
+Need to get 915 kB of archives.
+After this operation, 4 077 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 libhiredis0.14 amd64 0.14.0-6 [30,2 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 libjemalloc2 amd64 5.2.1-1ubuntu1 [235 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 liblua5.1-0 amd64 5.1.5-8.1build4 [99,9 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 lua-bitop amd64 1.0.2-5 [6 680 B]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 lua-cjson amd64 2.1.0+dfsg-2.1 [17,4 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 redis-tools amd64 5:5.0.7-2 [489 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 redis-server amd64 5:5.0.7-2 [37,3 kB]
+Fetched 915 kB in 0s (2 234 kB/s)
+Selecting previously unselected package libhiredis0.14:amd64.
+(Reading database ... 198719 files and directories currently installed.)
+Preparing to unpack .../0-libhiredis0.14_0.14.0-6_amd64.deb ...
+Unpacking libhiredis0.14:amd64 (0.14.0-6) ...
+Selecting previously unselected package libjemalloc2:amd64.
+Preparing to unpack .../1-libjemalloc2_5.2.1-1ubuntu1_amd64.deb ...
+Unpacking libjemalloc2:amd64 (5.2.1-1ubuntu1) ...
+Selecting previously unselected package liblua5.1-0:amd64.
+Preparing to unpack .../2-liblua5.1-0_5.1.5-8.1build4_amd64.deb ...
+Unpacking liblua5.1-0:amd64 (5.1.5-8.1build4) ...
+Selecting previously unselected package lua-bitop:amd64.
+Preparing to unpack .../3-lua-bitop_1.0.2-5_amd64.deb ...
+Unpacking lua-bitop:amd64 (1.0.2-5) ...
+Selecting previously unselected package lua-cjson:amd64.
+Preparing to unpack .../4-lua-cjson_2.1.0+dfsg-2.1_amd64.deb ...
+Unpacking lua-cjson:amd64 (2.1.0+dfsg-2.1) ...
+Selecting previously unselected package redis-tools.
+Preparing to unpack .../5-redis-tools_5%3a5.0.7-2_amd64.deb ...
+Unpacking redis-tools (5:5.0.7-2) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../6-redis-server_5%3a5.0.7-2_amd64.deb ...
+Unpacking redis-server (5:5.0.7-2) ...
+Setting up libjemalloc2:amd64 (5.2.1-1ubuntu1) ...
+Setting up lua-cjson:amd64 (2.1.0+dfsg-2.1) ...
+Setting up lua-bitop:amd64 (1.0.2-5) ...
+Setting up liblua5.1-0:amd64 (5.1.5-8.1build4) ...
+Setting up libhiredis0.14:amd64 (0.14.0-6) ...
+Setting up redis-tools (5:5.0.7-2) ...
+Setting up redis-server (5:5.0.7-2) ...
+Created symlink /etc/systemd/system/redis.service → /lib/systemd/system/redis-server.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/redis-server.service → /lib/systemd/system/redis-server.service.
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9) ...
+
+
+Поправляем конфигурацию для Ubuntu:
+
+makc@makc-VirtualBox:~$ sudo nano /etc/redis/redis.conf
+
+. . .
+
+# If you run Redis from upstart or systemd, Redis can interact with your
+# supervision tree. Options:
+#   supervised no      - no supervision interaction
+#   supervised upstart - signal upstart by putting Redis into SIGSTOP mode
+#   supervised systemd - signal systemd by writing READY=1 to $NOTIFY_SOCKET
+#   supervised auto    - detect upstart or systemd method based on
+#                        UPSTART_JOB or NOTIFY_SOCKET environment variables
+# Note: these supervision methods only signal "process is ready."
+#       They do not enable continuous liveness pings back to your supervisor.
+supervised systemd
+
+. . .
+
+Перезагружаем сервер:
+
+makc@makc-VirtualBox:~$ sudo systemctl restart redis.service
+
+Проверяем, запущен ли сервер:
+
+makc@makc-VirtualBox:~$ sudo systemctl status redis
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2020-09-03 21:54:47 MSK; 36s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+    Process: 14785 ExecStart=/usr/bin/redis-server /etc/redis/redis.conf (code=exited, status=0/SUCCESS)
+   Main PID: 14807 (redis-server)
+      Tasks: 4 (limit: 3417)
+     Memory: 1.9M
+     CGroup: /system.slice/redis-server.service
+             └─14807 /usr/bin/redis-server 127.0.0.1:6379
+
+сен 03 21:54:47 makc-VirtualBox systemd[1]: Starting Advanced key-value store...
+сен 03 21:54:47 makc-VirtualBox systemd[1]: redis-server.service: Can't open PID file /run/redis/redis-server.pid (y>
+сен 03 21:54:47 makc-VirtualBox systemd[1]: Started Advanced key-value store.
+lines 1-15/15 (END)
+
+
+Проверяем правильную работу Redis:
+
+makc@makc-VirtualBox:~$ redis-cli
+127.0.0.1:6379> ping
+PONG
+127.0.0.1:6379>
+
+
+
+
+
