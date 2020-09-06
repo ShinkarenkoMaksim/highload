@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\engine\Render;
 use app\engine\Request;
 use app\models\repositories\UserRepository;
 use app\engine\LoggerHandler;
@@ -10,6 +11,7 @@ class UserController extends Controller
 {
     public function actionRegister() :void
     {
+        $start = microtime(true);
         LoggerHandler::logInfo('Запуск функции actionRegister()');
         $request = (new Request())->getParams();
         if (isset($request['submit'])) {
@@ -22,7 +24,8 @@ class UserController extends Controller
                 LoggerHandler::logInfo('Пароли при регистрации совпадают - ' . $login);
                 $userRepo->register($login, $pass);
                 LoggerHandler::logInfo('Регистрация выполнена - ' . $login);
-                header("Location: /");
+                $finish = 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
+                var_dump($finish);
             } else
                 LoggerHandler::logInfo('Пароли не совпали - ' . $login);
                 die("Пароли не совпадают");
@@ -41,12 +44,13 @@ class UserController extends Controller
             $pass = $request['pass'];
             $userRepo = new UserRepository();
             if (!$userRepo->auth($login, $pass)) {
-                LoggerHandler::logInfo('Пароли при логине совпадают - ' . $login);
-                die("Не верный пароль! <br> Пароль admin - 123, пароль user - 111");
+                LoggerHandler::logInfo('Пароли при логине не совпадают - ' . $login);
+                die("Неверный пароль!");
             } else {
                 LoggerHandler::logInfo('Пароль верный, успешный логин - ' . $login);
-                echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
-                header("Location: /");
+                $finish = 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
+                var_dump($finish);
+                //header("Location: /");
             }
             exit();
         }
