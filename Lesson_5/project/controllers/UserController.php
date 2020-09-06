@@ -32,6 +32,7 @@ class UserController extends Controller
 
     public function actionLogin() :void
     {
+        $start = microtime(true);
         LoggerHandler::logInfo('Запуск функции actionLogin()');
         $request = (new Request())->getParams();
         if (isset($request['submit'])) {
@@ -44,6 +45,7 @@ class UserController extends Controller
                 die("Не верный пароль! <br> Пароль admin - 123, пароль user - 111");
             } else {
                 LoggerHandler::logInfo('Пароль верный, успешный логин - ' . $login);
+                echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
                 header("Location: /");
             }
             exit();

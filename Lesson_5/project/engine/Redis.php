@@ -27,4 +27,12 @@ class Redis
         return $this->connection;
     }
 
+    public function queryOne($key) {
+        return $this->getConnection()->hgetall($key);
+    }
+
+    public function hmsetOne($key, $values)
+    {
+        return $this->getConnection()->hmset($key, $values);
+    }
 }

@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\engine\Request;
-use app\models\repositories\UserRepository;
+use app\models\repositories\UserredisRepository;
 use app\engine\LoggerHandler;
 
 class UserredisController extends Controller
@@ -17,7 +17,7 @@ class UserredisController extends Controller
             $login = $request['login'];
             $pass = $request['pass'];
             $checkPass = $request['checkPass'];
-            $userRepo = new UserRepository();
+            $userRepo = new UserredisRepository();
             if ($pass === $checkPass) {
                 LoggerHandler::logInfo('Пароли при регистрации совпадают - ' . $login);
                 $userRepo->register($login, $pass);
@@ -38,7 +38,7 @@ class UserredisController extends Controller
             LoggerHandler::logInfo('Начало выполнения блока if функции actionLogin()');
             $login = $request['login'];
             $pass = $request['pass'];
-            $userRepo = new UserRepository();
+            $userRepo = new UserredisRepository();
             if (!$userRepo->auth($login, $pass)) {
                 LoggerHandler::logInfo('Пароли при логине совпадают - ' . $login);
                 die("Не верный пароль! <br> Пароль admin - 123, пароль user - 111");

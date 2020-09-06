@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\engine\Db;
+use app\engine\Redis;
 use app\models\entities\DataEntity;
 
 /**
@@ -12,10 +13,12 @@ use app\models\entities\DataEntity;
 abstract class Repository extends Models
 {
     protected $db;
+    protected $redis;
 
     public function __construct()
     {
         $this->db = Db::getInstance();
+        $this->redis = Redis::getInstance();
     }
 
     public function getWhere($field, $value)
@@ -23,6 +26,11 @@ abstract class Repository extends Models
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE `$field`=:$field";
         return $this->db->queryObject($sql, ["$field"=>$value], $this->getEntityClass());
+    }
+
+    public function getWhereRedis ($value)
+    {
+        return $this->redis->queryOne($value);
     }
 
     public function insert(DataEntity $entity)
@@ -43,6 +51,14 @@ abstract class Repository extends Models
         $entity->id = $this->db->lastInsertId();
     }
 
+    public function insertRedis(DataEntity $entity)
+    {
+        $params = [];
+        foreach ($entity->state as $key => $value) {
+            $params["$key"] = $entity->$key;
+        }
+        $this->redis->hmsetOne($entity->login, $params);
+    }
 
     public function getAll()
     {
