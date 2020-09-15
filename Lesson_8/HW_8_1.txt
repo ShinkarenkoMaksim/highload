@@ -1,0 +1,279 @@
+1. Установить Zabbix Server.
+
+makc@makc-VirtualBox:~$ wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+focal_all.deb
+--2020-09-15 18:23:09--  https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1+focal_all.deb
+Resolving repo.zabbix.com (repo.zabbix.com)... 162.243.159.138, 2604:a880:1:20::b82:1001
+Connecting to repo.zabbix.com (repo.zabbix.com)|162.243.159.138|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4244 (4,1K) [application/octet-stream]
+Saving to: ‘zabbix-release_5.0-1+focal_all.deb’
+
+zabbix-release_5.0-1+foca 100%[===================================>]   4,14K  --.-KB/s    in 0s
+
+2020-09-15 18:23:10 (1,71 GB/s) - ‘zabbix-release_5.0-1+focal_all.deb’ saved [4244/4244]
+
+
+
+makc@makc-VirtualBox:~$ sudo dpkg -i zabbix-release_5.0-1+focal_all.deb
+[sudo] password for makc:
+Selecting previously unselected package zabbix-release.
+(Reading database ... 236516 files and directories currently installed.)
+Preparing to unpack zabbix-release_5.0-1+focal_all.deb ...
+Unpacking zabbix-release (1:5.0-1+focal) ...
+Setting up zabbix-release (1:5.0-1+focal) ...
+
+
+makc@makc-VirtualBox:~$ sudo apt update
+Hit:1 http://ru.archive.ubuntu.com/ubuntu focal InRelease
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal-updates InRelease [111 kB]
+Get:3 http://security.ubuntu.com/ubuntu focal-security InRelease [107 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal-backports InRelease [98,3 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [209 kB]
+Get:6 http://repo.zabbix.com/zabbix/5.0/ubuntu focal InRelease [4 930 B]
+Get:7 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [356 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu focal-updates/main Translation-en [134 kB]
+Get:9 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 DEP-11 Metadata [209 kB]
+Get:10 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 c-n-f Metadata [9 044 B]
+Get:11 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [165 kB]
+Get:12 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [90,4 kB]
+Get:13 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe Translation-en [87,3 kB]
+Get:14 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe amd64 DEP-11 Metadata [186 kB]
+Get:15 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [5 444 B]
+Get:16 http://ru.archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 DEP-11 Metadata [2 468 B]
+Get:17 http://ru.archive.ubuntu.com/ubuntu focal-backports/universe amd64 DEP-11 Metadata [1 768 B]
+Get:18 http://repo.zabbix.com/zabbix/5.0/ubuntu focal/main Sources [1 201 B]
+Get:19 http://repo.zabbix.com/zabbix/5.0/ubuntu focal/main amd64 Packages [3 224 B]
+Get:20 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [72,1 kB]
+Get:21 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [184 kB]
+Get:22 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [65,3 kB]
+Get:23 http://security.ubuntu.com/ubuntu focal-security/main amd64 DEP-11 Metadata [24,3 kB]
+Get:24 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [4 588 B]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [56,4 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [27,3 kB]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [29,7 kB]
+Get:28 http://security.ubuntu.com/ubuntu focal-security/universe amd64 DEP-11 Metadata [52,4 kB]
+Get:29 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [2 336 B]
+Fetched 2 299 kB in 2s (1 178 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+6 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+
+makc@makc-VirtualBox:~$ sudo apt install zabbix-server-mysql zabbix-frontend-php
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libfprint-2-tod1 linux-headers-5.4.0-42 linux-headers-5.4.0-42-generic
+  linux-image-5.4.0-42-generic linux-modules-5.4.0-42-generic linux-modules-extra-5.4.0-42-generic
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  fping libodbc1 libopenipmi0 libssh2-1 php-bcmath php-gd php-ldap php7.4-bcmath php7.4-gd
+  php7.4-ldap snmpd ttf-dejavu-core
+Suggested packages:
+  libmyodbc odbc-postgresql tdsodbc unixodbc-bin snmptrapd zabbix-apache-conf zabbix-nginx-conf
+The following NEW packages will be installed:
+  fping libodbc1 libopenipmi0 libssh2-1 php-bcmath php-gd php-ldap php7.4-bcmath php7.4-gd
+  php7.4-ldap snmpd ttf-dejavu-core zabbix-frontend-php zabbix-server-mysql
+0 upgraded, 14 newly installed, 0 to remove and 6 not upgraded.
+Need to get 5 743 kB of archives.
+After this operation, 28,3 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 snmpd amd64 5.8+dfsg-2ubuntu2.3 [56,4 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libodbc1 amd64 2.3.6-0.1build1 [189 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libopenipmi0 amd64 2.0.27-0ubuntu2 [456 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 libssh2-1 amd64 1.8.0-2.1build1 [75,4 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 fping amd64 4.2-1 [32,4 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe amd64 php7.4-bcmath amd64 7.4.3-4ubuntu2.2 [15,1 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 php-bcmath all 2:7.4+75 [2 004 B]
+Get:8 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-gd amd64 7.4.3-4ubuntu2.2 [28,0 kB]
+Get:9 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 php-gd all 2:7.4+75 [2 000 B]
+Get:10 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 php7.4-ldap amd64 7.4.3-4ubuntu2.2 [29,5 kB]
+Get:11 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 php-ldap all 2:7.4+75 [2 004 B]
+Get:12 http://ru.archive.ubuntu.com/ubuntu focal/universe amd64 ttf-dejavu-core all 2.37-1 [2 978 B]
+Get:13 http://repo.zabbix.com/zabbix/5.0/ubuntu focal/main amd64 zabbix-server-mysql amd64 1:5.0.3-1+focal [2 423 kB]
+Get:14 http://repo.zabbix.com/zabbix/5.0/ubuntu focal/main amd64 zabbix-frontend-php all 1:5.0.3-1+focal [2 429 kB]
+Fetched 5 743 kB in 6s (1 024 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package snmpd.
+(Reading database ... 236522 files and directories currently installed.)
+Preparing to unpack .../00-snmpd_5.8+dfsg-2ubuntu2.3_amd64.deb ...
+Unpacking snmpd (5.8+dfsg-2ubuntu2.3) ...
+Selecting previously unselected package libodbc1:amd64.
+Preparing to unpack .../01-libodbc1_2.3.6-0.1build1_amd64.deb ...
+Unpacking libodbc1:amd64 (2.3.6-0.1build1) ...
+Selecting previously unselected package libopenipmi0.
+Preparing to unpack .../02-libopenipmi0_2.0.27-0ubuntu2_amd64.deb ...
+Unpacking libopenipmi0 (2.0.27-0ubuntu2) ...
+Selecting previously unselected package libssh2-1:amd64.
+Preparing to unpack .../03-libssh2-1_1.8.0-2.1build1_amd64.deb ...
+Unpacking libssh2-1:amd64 (1.8.0-2.1build1) ...
+Selecting previously unselected package fping.
+Preparing to unpack .../04-fping_4.2-1_amd64.deb ...
+Unpacking fping (4.2-1) ...
+Selecting previously unselected package zabbix-server-mysql.
+Preparing to unpack .../05-zabbix-server-mysql_1%3a5.0.3-1+focal_amd64.deb ...
+Unpacking zabbix-server-mysql (1:5.0.3-1+focal) ...
+Selecting previously unselected package php7.4-bcmath.
+Preparing to unpack .../06-php7.4-bcmath_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-bcmath (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php-bcmath.
+Preparing to unpack .../07-php-bcmath_2%3a7.4+75_all.deb ...
+Unpacking php-bcmath (2:7.4+75) ...
+Selecting previously unselected package php7.4-gd.
+Preparing to unpack .../08-php7.4-gd_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-gd (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php-gd.
+Preparing to unpack .../09-php-gd_2%3a7.4+75_all.deb ...
+Unpacking php-gd (2:7.4+75) ...
+Selecting previously unselected package php7.4-ldap.
+Preparing to unpack .../10-php7.4-ldap_7.4.3-4ubuntu2.2_amd64.deb ...
+Unpacking php7.4-ldap (7.4.3-4ubuntu2.2) ...
+Selecting previously unselected package php-ldap.
+Preparing to unpack .../11-php-ldap_2%3a7.4+75_all.deb ...
+Unpacking php-ldap (2:7.4+75) ...
+Selecting previously unselected package ttf-dejavu-core.
+Preparing to unpack .../12-ttf-dejavu-core_2.37-1_all.deb ...
+Unpacking ttf-dejavu-core (2.37-1) ...
+Selecting previously unselected package zabbix-frontend-php.
+Preparing to unpack .../13-zabbix-frontend-php_1%3a5.0.3-1+focal_all.deb ...
+Unpacking zabbix-frontend-php (1:5.0.3-1+focal) ...
+Setting up php7.4-bcmath (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/bcmath.ini with new version
+Setting up snmpd (5.8+dfsg-2ubuntu2.3) ...
+adduser: Warning: The home directory `/var/lib/snmp' does not belong to the user you are currently creating.
+Created symlink /etc/systemd/system/multi-user.target.wants/snmpd.service → /lib/systemd/system/snmpd.service.
+Setting up libodbc1:amd64 (2.3.6-0.1build1) ...
+Setting up php7.4-ldap (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/ldap.ini with new version
+Setting up libssh2-1:amd64 (1.8.0-2.1build1) ...
+Setting up libopenipmi0 (2.0.27-0ubuntu2) ...
+Setting up fping (4.2-1) ...
+Setting up ttf-dejavu-core (2.37-1) ...
+Setting up php7.4-gd (7.4.3-4ubuntu2.2) ...
+
+Creating config file /etc/php/7.4/mods-available/gd.ini with new version
+Setting up zabbix-server-mysql (1:5.0.3-1+focal) ...
+Setting up php-bcmath (2:7.4+75) ...
+Setting up php-ldap (2:7.4+75) ...
+Setting up zabbix-frontend-php (1:5.0.3-1+focal) ...
+update-alternatives: using /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf to provide /usr/share/zabbix/assets/fonts/graphfont.ttf (zabbix-frontend-font) in auto mode
+Setting up php-gd (2:7.4+75) ...
+Processing triggers for php7.4-fpm (7.4.3-4ubuntu2.2) ...
+Processing triggers for libc-bin (2.31-0ubuntu9) ...
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for fontconfig (2.13.1-2ubuntu3) ...
+Processing triggers for php7.4-cli (7.4.3-4ubuntu2.2) ...
+
+
+
+
+makc@makc-VirtualBox:~$ sudo apt install zabbix-agent
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libfprint-2-tod1 linux-headers-5.4.0-42 linux-headers-5.4.0-42-generic
+  linux-image-5.4.0-42-generic linux-modules-5.4.0-42-generic linux-modules-extra-5.4.0-42-generic
+Use 'sudo apt autoremove' to remove them.
+The following NEW packages will be installed:
+  zabbix-agent
+0 upgraded, 1 newly installed, 0 to remove and 6 not upgraded.
+Need to get 201 kB of archives.
+After this operation, 802 kB of additional disk space will be used.
+Get:1 http://repo.zabbix.com/zabbix/5.0/ubuntu focal/main amd64 zabbix-agent amd64 1:5.0.3-1+focal [201 kB]
+Fetched 201 kB in 1s (168 kB/s)
+Selecting previously unselected package zabbix-agent.
+(Reading database ... 237946 files and directories currently installed.)
+Preparing to unpack .../zabbix-agent_1%3a5.0.3-1+focal_amd64.deb ...
+Unpacking zabbix-agent (1:5.0.3-1+focal) ...
+Setting up zabbix-agent (1:5.0.3-1+focal) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/zabbix-agent.service → /lib/systemd/system/zabbix-agent.service.
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.2) ...
+
+
+
+
+makc@makc-VirtualBox:~$ mysql -uhighload -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.21-0ubuntu0.20.04.4 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+mysql> create database zabbix character set utf8 collate utf8_bin;
+Query OK, 1 row affected, 2 warnings (0.02 sec)
+
+
+
+makc@makc-VirtualBox:~$ zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uhighload -p zabbix
+Enter password:
+
+makc@makc-VirtualBox:~$ sudo nano /etc/zabbix/zabbix_server.conf
+
+DBUser=highload
+DBPassword=password
+
+
+
+makc@makc-VirtualBox:~$ sudo apt install zabbix-nginx-conf
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libfprint-2-tod1 linux-headers-5.4.0-42 linux-headers-5.4.0-42-generic
+  linux-image-5.4.0-42-generic linux-modules-5.4.0-42-generic linux-modules-extra-5.4.0-42-generic
+Use 'sudo apt autoremove' to remove them.
+The following NEW packages will be installed:
+  zabbix-nginx-conf
+0 upgraded, 1 newly installed, 0 to remove and 6 not upgraded.
+Need to get 6 004 B of archives.
+After this operation, 18,4 kB of additional disk space will be used.
+Get:1 http://repo.zabbix.com/zabbix/5.0/ubuntu focal/main amd64 zabbix-nginx-conf all 1:5.0.3-1+focal [6 004 B]
+Fetched 6 004 B in 1s (9 256 B/s)
+Selecting previously unselected package zabbix-nginx-conf.
+(Reading database ... 237958 files and directories currently installed.)
+Preparing to unpack .../zabbix-nginx-conf_1%3a5.0.3-1+focal_all.deb ...
+Unpacking zabbix-nginx-conf (1:5.0.3-1+focal) ...
+Setting up zabbix-nginx-conf (1:5.0.3-1+focal) ...
+
+
+
+
+makc@makc-VirtualBox:~$ sudo nano /etc/zabbix/nginx.conf
+
+
+	listen          80;
+        server_name     192.168.88.219;
+
+
+
+makc@makc-VirtualBox:~$ sudo nginx -s reload
+
+
+
+makc@makc-VirtualBox:~$ sudo systemctl start zabbix-server
+
+
+
+makc@makc-VirtualBox:~$ sudo systemctl enable zabbix-server
+
+
+
+
+
+
+
